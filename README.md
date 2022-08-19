@@ -1,2 +1,2 @@
-# spring-boot-boilerplate
+# spring-boot-demo
 ready made code for spring boot application 
