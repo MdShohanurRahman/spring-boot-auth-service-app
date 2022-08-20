@@ -16,13 +16,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class AppAuthenticationProvider implements AuthenticationProvider {
 
-    private final CustomUserDetailsService userDetailsService;
+    private final AppUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public CustomAuthenticationProvider(
-            CustomUserDetailsService userDetailsService,
+    public AppAuthenticationProvider(
+            AppUserDetailsService userDetailsService,
             PasswordEncoder passwordEncoder
     ) {
         this.userDetailsService = userDetailsService;

@@ -32,7 +32,7 @@ import java.util.UUID;
 @Transactional
 public class AuthServiceImpl implements AuthService {
 
-    private final CustomAuthenticationProvider authenticationProvider;
+    private final AppAuthenticationProvider authenticationProvider;
     private final JwtProvider jwtProvider;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     public AuthServiceImpl(
-            CustomAuthenticationProvider authenticationProvider,
+            AppAuthenticationProvider authenticationProvider,
             JwtProvider jwtProvider,
             UserRepository userRepository,
             RoleRepository roleRepository,

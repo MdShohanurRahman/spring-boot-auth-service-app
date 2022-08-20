@@ -5,7 +5,7 @@
 
 package com.example.demo.appSecurity.jwt;
 
-import com.example.demo.appSecurity.services.CustomUserDetailsService;
+import com.example.demo.appSecurity.services.AppUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -27,11 +27,11 @@ import java.io.IOException;
 @Component
 public class JwtOncePerRequestFilter extends OncePerRequestFilter {
 
-    private final CustomUserDetailsService userDetailsService;
+    private final AppUserDetailsService userDetailsService;
     private final JwtProvider jwtProvider;
 
     public JwtOncePerRequestFilter(
-            CustomUserDetailsService userDetailsService,
+            AppUserDetailsService userDetailsService,
             JwtProvider jwtProvider
     ) {
         this.userDetailsService = userDetailsService;
