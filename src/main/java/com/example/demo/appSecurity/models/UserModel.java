@@ -29,14 +29,4 @@ public class UserModel {
 
     private Set<RoleModel> roles = new HashSet<>();
 
-    public List<String> getRoleNameList() {
-        return roles.stream().map(RoleModel::getRoleName).collect(Collectors.toList());
-    }
-
-    public Map<String, Object> response() {
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("email", email);
-        map.put("roles", getRoleNameList());
-        return map;
-    }
 }

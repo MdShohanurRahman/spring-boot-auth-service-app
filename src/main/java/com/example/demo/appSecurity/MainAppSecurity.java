@@ -28,8 +28,7 @@ public class MainAppSecurity {
 
     private static final String[] PUBLIC_URLS = {
             "/",
-            "/api/v1/auth/token",
-            "/api/v1/auth/register"
+            "/api/v1/auth/**"
     };
 
     public MainAppSecurity(

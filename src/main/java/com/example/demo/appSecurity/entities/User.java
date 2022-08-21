@@ -39,12 +39,15 @@ public class User implements UserDetails {
     private String email;
 
     @NotNull
+    @Column(length = 60)
     private String password;
 
     @NotNull
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role")
     private Set<Role> roles = new HashSet<>();
+
+    private Boolean enabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -73,6 +76,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
