@@ -30,26 +30,26 @@ import java.util.Map;
 @Slf4j
 public class UserController {
 
-    private final UserService authService;
+    private final UserService userService;
 
-    public UserController(UserService authService) {
-        this.authService = authService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping("/token")
     public ResponseEntity<TokenModel> token(@Valid @RequestBody LoginModel model) {
-        return new ResponseEntity<>(authService.getJwtToken(model), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getJwtToken(model), HttpStatus.OK);
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserModel model, HttpServletRequest request) {
-        User user = authService.register(model, AppUtil.getApiBaseUrl(request));
+        User user = userService.register(model, AppUtil.getApiBaseUrl(request));
         return new ResponseEntity<>(Map.of("message", "Verification link sent to " + user.getEmail()), HttpStatus.OK);
     }
 
     @GetMapping("/verifyRegistration")
     public ResponseEntity<?> verifyRegistration(@RequestParam String token) {
-        if (!authService.isValidVerificationToken(token)) {
+        if (!userService.isValidVerificationToken(token)) {
             return new ResponseEntity<>(Map.of("message", "User verification failed"), HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(Map.of("message", "User verified successfully"), HttpStatus.OK);
@@ -58,35 +58,35 @@ public class UserController {
 
     @GetMapping("/resendVerifyToken")
     public ResponseEntity<?> resendVerificationToken(@RequestParam String token, HttpServletRequest request) {
-        VerificationToken verificationToken = authService.resendVerificationToken(token, AppUtil.getApiBaseUrl(request));
+        VerificationToken verificationToken = userService.resendVerificationToken(token, AppUtil.getApiBaseUrl(request));
         return new ResponseEntity<>(Map.of("message", "Link sent to " + verificationToken.getUser().getEmail()), HttpStatus.OK);
     }
 
     @PostMapping("/resetPassword")
     public ResponseEntity<?> resetPassword(@RequestBody PasswordModel passwordModel, HttpServletRequest request) {
-        PasswordResetToken token = authService.sendPasswordResetToken(passwordModel, AppUtil.getApiBaseUrl(request));
+        PasswordResetToken token = userService.sendPasswordResetToken(passwordModel, AppUtil.getApiBaseUrl(request));
         return new ResponseEntity<>(Map.of("message", "Link sent to " + token.getUser().getEmail()), HttpStatus.OK);
     }
 
     @PostMapping("/savePassword")
     public ResponseEntity<?> savePassword(@RequestParam String token, @RequestBody PasswordModel passwordModel) {
-        if (!authService.isValidatePasswordResetToken(token)) throw new BadRequestApiException("Invalid token");
+        if (!userService.isValidatePasswordResetToken(token)) throw new BadRequestApiException("Invalid token");
 
-        User user = authService.getUserByPasswordResetToken(token).orElseThrow(() -> new BadRequestApiException("Invalid token"));
-        authService.changePassword(user, passwordModel.getNewPassword());
+        User user = userService.getUserByPasswordResetToken(token).orElseThrow(() -> new BadRequestApiException("Invalid token"));
+        userService.changePassword(user, passwordModel.getNewPassword());
 
         return new ResponseEntity<>(Map.of("message", "password reset"), HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/changePassword")
     public ResponseEntity<?> changePassword(@RequestBody PasswordModel passwordModel) {
-        User user = authService.findUserByEmail(passwordModel.getEmail()).orElseThrow(() -> new NotFoundApiException("Invalid email"));
+        User user = userService.findUserByEmail(passwordModel.getEmail()).orElseThrow(() -> new NotFoundApiException("Invalid email"));
 
-        if (!authService.checkIfValidOldPassword(user, passwordModel.getOldPassword())) {
+        if (!userService.checkIfValidOldPassword(user, passwordModel.getOldPassword())) {
             throw new NotFoundApiException("Invalid old password");
         }
 
-        authService.changePassword(user, passwordModel.getNewPassword());
+        userService.changePassword(user, passwordModel.getNewPassword());
 
         return new ResponseEntity<>(Map.of("message", "password changed"), HttpStatus.ACCEPTED);
     }
