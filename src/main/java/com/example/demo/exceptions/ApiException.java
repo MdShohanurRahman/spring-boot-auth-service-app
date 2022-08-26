@@ -16,7 +16,7 @@ public class ApiException extends RuntimeException {
     private HttpStatus httpStatus;
 
     public ApiException() {
-        this("Your request could not be processed", HttpStatus.INTERNAL_SERVER_ERROR);
+        this("Your request could not be processed");
     }
 
     public ApiException(String message) {

@@ -28,11 +28,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/auth")
 @Slf4j
-public class UserController {
+public class AuthController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public AuthController(UserService userService) {
         this.userService = userService;
     }
 
