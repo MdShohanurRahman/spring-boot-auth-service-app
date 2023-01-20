@@ -16,13 +16,13 @@ import com.example.demo.appSecurity.services.UserService;
 import com.example.demo.exceptions.BadRequestApiException;
 import com.example.demo.exceptions.NotFoundApiException;
 import com.example.demo.utils.AppUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.Map;
 
 @RestController

@@ -6,12 +6,11 @@
 package com.example.demo.appSecurity.entities;
 
 import com.example.demo.appSecurity.enums.RoleName;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Entity
 @Setter

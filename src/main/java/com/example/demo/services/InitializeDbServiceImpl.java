@@ -10,30 +10,23 @@ import com.example.demo.appSecurity.entities.User;
 import com.example.demo.appSecurity.enums.RoleName;
 import com.example.demo.appSecurity.repositories.RoleRepository;
 import com.example.demo.appSecurity.repositories.UserRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class InitializeDbServiceImpl implements InitializeDbService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public InitializeDbServiceImpl(
-            UserRepository userRepository, RoleRepository roleRepository,
-            PasswordEncoder passwordEncoder
-    ) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public void init() {

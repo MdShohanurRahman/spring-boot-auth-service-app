@@ -7,20 +7,21 @@ package com.example.demo.appSecurity;
 
 import com.example.demo.appSecurity.jwt.JwtAuthenticationEntryPoint;
 import com.example.demo.appSecurity.jwt.JwtOncePerRequestFilter;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.servlet.http.HttpServletResponse;
-
+@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class MainAppSecurity {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -30,19 +31,6 @@ public class MainAppSecurity {
             "/",
             "/api/v1/auth/**"
     };
-
-    public MainAppSecurity(
-            JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-            JwtOncePerRequestFilter jwtOncePerRequestFilter
-    ) {
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.jwtOncePerRequestFilter = jwtOncePerRequestFilter;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(11);
-    }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -64,7 +52,7 @@ public class MainAppSecurity {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers(PUBLIC_URLS).permitAll()
+                .requestMatchers(PUBLIC_URLS).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -85,7 +73,7 @@ public class MainAppSecurity {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers(PUBLIC_URLS).permitAll()
+                .requestMatchers(PUBLIC_URLS).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -23,6 +23,8 @@ import com.example.demo.exceptions.ApiException;
 import com.example.demo.exceptions.BadRequestApiException;
 import com.example.demo.exceptions.NotFoundApiException;
 import com.example.demo.services.EmailSenderService;
+import jakarta.transaction.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,12 +33,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final AppAuthenticationProvider authenticationProvider;
@@ -47,25 +49,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailSenderService emailSenderService;
-
-    public UserServiceImpl(
-            AppAuthenticationProvider authenticationProvider,
-            JwtProvider jwtProvider,
-            UserRepository userRepository,
-            RoleRepository roleRepository,
-            VerificationTokenRepository verificationTokenRepository,
-            PasswordResetTokenRepository passwordResetTokenRepository, PasswordEncoder passwordEncoder,
-            EmailSenderService emailSenderService
-    ) {
-        this.authenticationProvider = authenticationProvider;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.verificationTokenRepository = verificationTokenRepository;
-        this.passwordResetTokenRepository = passwordResetTokenRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtProvider = jwtProvider;
-        this.emailSenderService = emailSenderService;
-    }
 
     @Override
     public Optional<User> findUserByEmail(String email) {

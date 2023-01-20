@@ -6,10 +6,10 @@
 package com.example.demo.appSecurity.entities;
 
 import com.example.demo.utils.AppUtil;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Entity

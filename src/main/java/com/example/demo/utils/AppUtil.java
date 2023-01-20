@@ -5,9 +5,9 @@
 
 package com.example.demo.utils;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Date;
 
